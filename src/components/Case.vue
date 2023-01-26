@@ -17,10 +17,6 @@ const props = defineProps({
     body: String
 })
 
-const emit = defineEmits([
-    "gabriel", "alex"])
-
-console.log(props.name)
 </script>
 
 <style scoped>

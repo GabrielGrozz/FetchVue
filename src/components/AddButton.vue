@@ -1,11 +1,16 @@
-<template>
+<!-- <template>
     <div>
         <div>
-            <button>Novo</button>
+            <button @click="sendEmit" >Criar</button>
         </div>
     </div>
 </template>
 
 <script setup>
+    const emits = defineEmits('showCreationEmit'),
 
-</script>
+    const sendEmit = () => {
+        emits('showCreationEmit')
+    }
+
+</script> -->
