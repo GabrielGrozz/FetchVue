@@ -1,7 +1,7 @@
 <template>
-    <AddButton />
+    <AddButton @showCreationEmit="creationForm = !creationForm" />
     <Case :name="post.title" :body="post.body" class="case" v-for="post in posts" :key="post.id" />
-    <Creation @showCreationEmit="showCreation"/>
+    <Creation v-if="creationForm" />
 
 </template>
 
@@ -29,12 +29,7 @@ const Getposts = async () => {
 
 const posts = ref([])
 
-const showCreation = () => {
-    creationForm = !creationForm
-    console.log(creationForm)
-}
-
-let creationForm = true
+let creationForm = ref(true)
 
 
 

@@ -1,16 +1,20 @@
-<!-- <template>
+<template>
     <div>
         <div>
-            <button @click="sendEmit" >Criar</button>
+            <button @click="sendEmit">Criar</button>
         </div>
     </div>
 </template>
 
 <script setup>
-    const emits = defineEmits('showCreationEmit'),
+const emit = defineEmits(['showCreationEmit'])
 
-    const sendEmit = () => {
-        emits('showCreationEmit')
-    }
+const sendEmit = () => {
+    emit('showCreationEmit')
+}
 
-</script> -->
+</script>
+
+<style scoped>
+
+</style>
