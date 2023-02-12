@@ -29,7 +29,7 @@ const Getposts = async () => {
 
 const posts = ref([])
 
-let creationForm = ref(true)
+let creationForm = ref(false)
 
 
 
