@@ -6,16 +6,25 @@
         <div class="body">
             <p>{{ body }}</p>
         </div>
-        <button class="button">Editar</button>
+        <button class="button" @click="showUpdate">Editar</button>
     </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
+
 //forma como passamos props com composition API
 const props = defineProps({
     name: String,
     body: String
 })
+
+const nameValue = ref(props.name)
+
+const emit = defineEmits(["showUpdate"])
+const showUpdate = () => {
+    emit("showUpdate")
+}
 
 </script>
 

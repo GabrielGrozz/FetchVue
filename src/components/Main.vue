@@ -1,36 +1,47 @@
 <template>
-    <AddButton @showCreationEmit="creationForm = !creationForm" />
-    <Case :name="post.title" :body="post.body" class="case" v-for="post in posts" :key="post.id" />
-    <Creation v-if="creationForm" />
-
+  <AddButton @showCreationEmit="creationForm = !creationForm" />
+  <!--<Case @showUpdate="updateForm = !updateForm" v-for="post in posts" :name="post.title" :body="post.body" class="case"  :key="post.id" />-->
+  <Case
+    @showUpdate="updateForm = !updateForm"
+    v-for="post in posts"
+    :name="post.title"
+    :body="post.body"
+    class="case"
+    :key="post.id"
+  />
+  <Creation v-if="creationForm" />
+  <!--<Update v-if="updateForm" v-for="post in posts" :nameValue="post.title" :textValue="post.body"/> -->
+  <Update v-if="updateForm" />
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from "vue";
 
-import AddButton from "./AddButton.vue"
-import Case from "./Case.vue"
-import Creation from "./Creation.vue"
+import AddButton from "./AddButton.vue";
+import Case from "./Case.vue";
+import Creation from "./Creation.vue";
+import Update from "./Update.vue";
+
+const updateForm = ref(false)
+const creationForm = ref(false)
 
 const props = defineProps({
-    name: String,
-    body: String
-})
+  name: String,
+  body: String,
+});
+
 
 onMounted(() => {
-    Getposts()
-})
+    Getposts();
+});
+
+const posts = ref([]);
 
 const Getposts = async () => {
-    const data = await fetch('http://localhost:3000/posts')
-    const res = await data.json()
-    posts.value = res
-}
-
-const posts = ref([])
-
-let creationForm = ref(false)
-
+    const data = await fetch("http://localhost:3000/posts");
+    const res = await data.json();
+    posts.value = res;
+};
 
 
 
@@ -38,12 +49,9 @@ let creationForm = ref(false)
 
 <style scoped>
 .case {
-    margin: 5px;
-    display: flex;
-    display: inline-block;
-    cursor: pointer;
-
-
+  margin: 5px;
+  display: flex;
+  display: inline-block;
+  cursor: pointer;
 }
 </style>
-
