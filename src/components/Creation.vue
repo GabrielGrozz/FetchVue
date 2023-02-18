@@ -1,7 +1,7 @@
 <template>
   <div class="creation-container">
     <div class="creation">
-      <form action="" @submit="createBurger" class="form">
+      <form action="" @submit.prevent="createBurger" class="form">
         <label class="label" for="name">Nome</label>
         <input type="text" name="name" id="name" v-model="name" />
 
@@ -15,7 +15,9 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
+
+const emit = defineEmits(["success"]);
 
 let name = ref(null);
 let content = ref(null);
@@ -36,7 +38,7 @@ const createBurger = async () => {
   const res = await req.json();
   console.log(res);
 
-  console.log(data);
+  emit("success", res);
 };
 </script>
 

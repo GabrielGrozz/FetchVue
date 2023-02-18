@@ -1,6 +1,6 @@
 <template>
   <div class="update-container">
-    <form action="" @submit.prevent="updatePost">
+    <form action="" @submit="updatePost">
       <label for="name">Nome</label><br />
       <input
         type="text"
@@ -11,7 +11,7 @@
 
       <label for="text"></label><br />
       <textarea
-        name="text-area"
+        name="text"
         id="text"
         cols="30"
         rows="10"
@@ -19,30 +19,43 @@
       ></textarea
       ><br />
 
-      <button>Deletar</button>
+      <button @click="DeletePost">Deletar</button>
       <button type="submit" @click="updatePost">Salvar alterações</button>
     </form>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, defineEmits } from "vue";
+
+const emit = defineEmits(["success"]);
 
 const props = defineProps({
   post: Object,
 });
 
-const propsValue = ref(props.post);
+const propsValue = ref(JSON.parse(JSON.stringify(props.post)));
 
 const updatePost = async () => {
-  const req = await fetch(`http://localhost:3000/posts/${propsValue.value.id}`, {
-    method: "PUT",
-    body: JSON.stringify(propsValue),
-    headers: { "Content-Type": "application/json" },
-  });
-  const res = req.json()
-  console.log(res)
+  const req = await fetch(
+    `http://localhost:3000/posts/${propsValue.value.id}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(propsValue.value),
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+  const res = await req.json();
+  emit("success", res);
+  console.log(res);
 };
+
+const DeletePost = async () => {
+  const req = await fetch(`http://localhost:3000/posts/${propsValue.value.id}`, { method: "DELETE"})
+
+  const res = await req.json()
+  console.log(res, "delete sucess")
+}
 </script>
 
 <style scoped>

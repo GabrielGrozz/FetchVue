@@ -30,6 +30,22 @@ const Getposts = async () => {
   const res = await data.json();
   posts.value = res;
 };
+
+const addCreatedPostInList = (createdPost) => {
+  posts.value.push(createdPost);
+  creationForm.value = false;
+};
+
+const updatePostInList = (editedPost) => {
+  const indexOfPostInList = posts.value.findIndex(
+    (post) => post.id === editedPost.id
+  );
+
+  if (indexOfPostInList > -1) {
+    posts[indexOfPostInList] = editedPost;
+  }
+  updateForm.value = false;
+};
 </script>
 
 <template>
@@ -43,12 +59,9 @@ const Getposts = async () => {
     class="case"
     :key="post.id"
   />
-  <Creation v-if="creationForm" />
+  <Creation v-if="creationForm" @success="addCreatedPostInList" />
   <!--<Update v-if="updateForm" v-for="post in posts" :nameValue="post.title" :textValue="post.body"/> -->
-  <Update
-    v-if="updateForm"
-    :post="postData"
-  />
+  <Update v-if="updateForm" :post="postData" @success="updatePostInList" />
 </template>
 
 <style scoped>
