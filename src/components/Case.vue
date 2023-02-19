@@ -4,7 +4,7 @@
       <h1>{{ name }}</h1>
     </div>
     <div class="body">
-      <p>{{ body }}</p>
+      <p class="body-content">{{ body }}</p>
     </div>
     <button class="button" @click="showUpdate">Editar</button>
   </div>
@@ -48,8 +48,17 @@ const showUpdate = () => {
 .body {
   color: rgb(155, 150, 236);
   overflow: hidden;
-  border: 2px red solid;
   height: 60%;
+  background: rgba(149, 149, 149,.2);
+
+
+}
+
+.body-content{
+  display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+
 }
 
 .button {

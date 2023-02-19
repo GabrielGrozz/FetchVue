@@ -1,6 +1,6 @@
 <template>
-  <div class="creation-container">
-    <div class="creation">
+  <div class="modal">
+    <div class="modal-content">
       <form action="" @submit.prevent="createBurger" class="form">
         <label class="label" for="name">Nome</label>
         <input type="text" name="name" id="name" v-model="name" />
@@ -9,6 +9,7 @@
         <textarea name="content" id="content" v-model="content"></textarea>
 
         <button class="saveContent" type="submit">Salvar</button>
+        <button @click="emit('close')" type="button"> X </button>
       </form>
     </div>
   </div>
@@ -17,12 +18,26 @@
 <script setup>
 import { ref, defineEmits } from "vue";
 
-const emit = defineEmits(["success"]);
+const emit = defineEmits(["success", "close"]);
 
 let name = ref(null);
 let content = ref(null);
 
+const verificaSeEValido = () => {
+  if (!name.value || !content.value) {
+    return false
+  }
+  if (name.value.length < 3) {
+    return false
+  }
+  return true
+}
+
 const createBurger = async () => {
+  if(verificaSeEValido() === false) {
+    alert('Preencha os dados corretamente')
+    return
+  }
   const data = {
     title: name.value,
     body: content.value,
@@ -39,25 +54,11 @@ const createBurger = async () => {
   console.log(res);
 
   emit("success", res);
+  emit('close')
 };
 </script>
 
 <style scoped>
-.creation-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.creation {
-  position: absolute;
-  height: 300px;
-  width: 400px;
-  top: 20%;
-  background: purple;
-  padding: 10px;
-}
-
 .form {
   display: flex;
   flex-direction: column;
